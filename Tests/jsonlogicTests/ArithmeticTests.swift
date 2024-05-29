@@ -134,6 +134,20 @@ class Arithmetic: XCTestCase {
         XCTAssertEqual(1, try applyRule(rule, to: nil))
     }
 
+    func testDivisionByZero() {
+        let rule =
+        """
+        { "/" : [4, 0]}
+        """
+        XCTAssertThrowsError(try applyRule(rule, to: nil) as Double) { error in
+            XCTAssertEqual(error as! JSONLogicError, JSONLogicError.canNotConvertResultToType(Double.self))
+        }
+
+        XCTAssertThrowsError(try applyRule(rule, to: nil) as Int) { error in
+            XCTAssertEqual(error as! JSONLogicError, JSONLogicError.canNotConvertResultToType(Int.self))
+        }
+    }
+
     func testModulo() {
         var rule =
                 """
@@ -152,6 +166,20 @@ class Arithmetic: XCTestCase {
                 { "%" : [3, 2]}
                 """
         XCTAssertEqual(1, try applyRule(rule, to: nil))
+    }
+
+    func testModuloByZero() {
+        let rule =
+        """
+        { "%" : [4, 0]}
+        """
+        XCTAssertThrowsError(try applyRule(rule, to: nil) as Double) { error in
+            XCTAssertEqual(error as! JSONLogicError, JSONLogicError.canNotConvertResultToType(Double.self))
+        }
+
+        XCTAssertThrowsError(try applyRule(rule, to: nil) as Int) { error in
+            XCTAssertEqual(error as! JSONLogicError, JSONLogicError.canNotConvertResultToType(Int.self))
+        }
     }
 
     func testUnaryMinus() {

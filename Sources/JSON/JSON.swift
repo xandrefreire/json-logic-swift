@@ -258,15 +258,27 @@ public enum JSON: Equatable {
     public static func / (lhs: JSON, rhs: JSON) -> JSON {
         switch (lhs, rhs) {
         case let (.Double(x), .Double(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Double(x / y)
         case let (.Int(x), .Int(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             if x % y == 0 {
                 return .Int(x / y)
             }
             return .Double(Swift.Double(x) / Swift.Double(y))
         case let (.Double(x), .Int(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Double(x / Swift.Double(y))
         case let (.Int(x), .Double(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Double(Swift.Double(x) / y)
         default:
             return JSON.Null
@@ -276,12 +288,24 @@ public enum JSON: Equatable {
     public static func % (lhs: JSON, rhs: JSON) -> JSON {
         switch (lhs, rhs) {
         case let (.Double(x), .Double(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Double(x.truncatingRemainder(dividingBy: y))
         case let (.Int(x), .Int(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Int(x % y)
         case let (.Double(x), .Int(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Double(x.truncatingRemainder(dividingBy: Swift.Double(y)))
         case let (.Int(x), .Double(y)):
+            guard y != 0 else {
+                return JSON.Null
+            }
             return .Double(Swift.Double(x).truncatingRemainder(dividingBy: y))
         default:
             return JSON.Null
